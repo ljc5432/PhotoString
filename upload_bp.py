@@ -11,6 +11,9 @@ upload_bp = Blueprint("upload_bp", __name__)
 def upload():
     if request.method == 'POST':
         uploaded_file = request.files['file']
+        # 限制文件格式
+        if uploaded_file.content_type.find('jpg') == 0:
+            return '<p>Please upload JPG format file<br/> <a href="/">Return</a>.'
         time_str = datetime.now().strftime('%Y%m%d%H%M%S')
         new_filename = time_str+'.jpg'
         uploaded_file.save('./static/upload/'+new_filename)
